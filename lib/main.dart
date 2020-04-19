@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +18,17 @@ void main() {
   );
 }
 
-class DicePage extends StatelessWidget {
+//since we want to change image in a reactive way we have to use a stateful widget
+//state part
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+//widget part of a stateful widget
+class _DicePageState extends State<DicePage> {
+  int leftDiceNumber =
+      1; //so that this is instantiated only once, not every time we reload
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -28,10 +40,13 @@ class DicePage extends StatelessWidget {
             child: FlatButton(
               //want image to appear as button itself
               //comes with default padding of 16 from left and right
-              child: Image.asset('images/dice1.png'),
+              child: Image.asset('images/dice$leftDiceNumber.png'),
               onPressed: () {
                 //what happens
-                print('left button got pressed');
+                setState(() {
+                  //so that we can call build whenever leftDiceNumber is changed
+                  leftDiceNumber = 6;
+                });
               },
             ),
           ),
@@ -50,3 +65,7 @@ class DicePage extends StatelessWidget {
     );
   }
 }
+
+//class DicePage extends StatelessWidget {
+//  //state of stateless widget never changes
+//}
