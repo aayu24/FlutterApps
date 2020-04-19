@@ -46,6 +46,7 @@ class _DicePageState extends State<DicePage> {
                 //what happens
                 setState(() {
                   //so that we can call build whenever leftDiceNumber is changed
+                  rightDiceNumber = Random().nextInt(6) + 1;
                   leftDiceNumber = Random().nextInt(6) + 1;
                 });
               },
@@ -59,6 +60,7 @@ class _DicePageState extends State<DicePage> {
               onPressed: () {
                 setState(() {
                   rightDiceNumber = Random().nextInt(6) + 1;
+                  leftDiceNumber = Random().nextInt(6) + 1;
                 });
                 //print('right button got pressed.');
               }, //this is example of a void callback
