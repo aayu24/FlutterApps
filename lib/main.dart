@@ -27,8 +27,9 @@ class DicePage extends StatefulWidget {
 
 //widget part of a stateful widget
 class _DicePageState extends State<DicePage> {
-  int leftDiceNumber =
-      1; //so that this is instantiated only once, not every time we reload
+  //so that this is instantiated only once, not every time we reload
+  int leftDiceNumber = 1;
+  int rightDiceNumber = 3;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -45,7 +46,7 @@ class _DicePageState extends State<DicePage> {
                 //what happens
                 setState(() {
                   //so that we can call build whenever leftDiceNumber is changed
-                  leftDiceNumber = 6;
+                  leftDiceNumber = Random().nextInt(6) + 1;
                 });
               },
             ),
@@ -54,9 +55,12 @@ class _DicePageState extends State<DicePage> {
             //resize to fill the entire row space
             //flex: 1,
             child: FlatButton(
-              child: Image.asset('images/dice1.png'),
+              child: Image.asset('images/dice$rightDiceNumber.png'),
               onPressed: () {
-                print('right button got pressed.');
+                setState(() {
+                  rightDiceNumber = Random().nextInt(6) + 1;
+                });
+                //print('right button got pressed.');
               }, //this is example of a void callback
             ),
           ),
