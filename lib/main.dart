@@ -10,14 +10,15 @@ class XylophoneApp extends StatelessWidget {
         'note$soundNumber.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
   }
 
-  Expanded buildTile(int soundNumber, Color tilecolor) {
+  Expanded buildTile({int soundNumber, Color color}) {
+    //if we want to use named parameters enclose them in {}
     //can directly return expanded widget instead of widget
     return Expanded(
       child: FlatButton(
         onPressed: () {
           playSound(soundNumber);
         },
-        color: tilecolor,
+        color: color,
       ),
     );
   }
@@ -42,13 +43,13 @@ class XylophoneApp extends StatelessWidget {
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              buildTile(1, tileColorsList[0]),
-              buildTile(2, tileColorsList[1]),
-              buildTile(3, tileColorsList[2]),
-              buildTile(4, Colors.green),
-              buildTile(5, Colors.blue),
-              buildTile(6, Colors.indigo),
-              buildTile(7, Colors.deepPurple),
+              buildTile(soundNumber: 1, color: tileColorsList[0]),
+              buildTile(soundNumber: 2, color: tileColorsList[1]),
+              buildTile(soundNumber: 3, color: tileColorsList[2]),
+              buildTile(color: Colors.green, soundNumber: 4),
+              buildTile(color: Colors.blue, soundNumber: 5),
+              buildTile(color: Colors.indigo, soundNumber: 6),
+              buildTile(color: Colors.deepPurple, soundNumber: 7),
             ],
           ),
         ),
