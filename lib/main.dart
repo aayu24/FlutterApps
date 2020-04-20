@@ -10,6 +10,17 @@ class XylophoneApp extends StatelessWidget {
         'note$soundNumber.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
   }
 
+  Widget buildTile(int soundNumber, Color tilecolor) {
+    return Expanded(
+      child: FlatButton(
+        onPressed: () {
+          playSound(soundNumber);
+        },
+        color: tilecolor,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,62 +31,13 @@ class XylophoneApp extends StatelessWidget {
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    playSound(1);
-                  },
-                  color: Colors.red,
-                ),
-              ),
-              Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    playSound(2);
-                  },
-                  color: Colors.orange,
-                ),
-              ),
-              Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    playSound(3);
-                  },
-                  color: Colors.yellow,
-                ),
-              ),
-              Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    playSound(4);
-                  },
-                  color: Colors.green,
-                ),
-              ),
-              Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    playSound(5);
-                  },
-                  color: Colors.blue,
-                ),
-              ),
-              Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    playSound(6);
-                  },
-                  color: Colors.indigo,
-                ),
-              ),
-              Expanded(
-                child: FlatButton(
-                  onPressed: () {
-                    playSound(7);
-                  },
-                  color: Colors.deepPurple,
-                ),
-              ),
+              buildTile(1, Colors.red),
+              buildTile(2, Colors.orange),
+              buildTile(3, Colors.yellow),
+              buildTile(4, Colors.green),
+              buildTile(5, Colors.blue),
+              buildTile(6, Colors.indigo),
+              buildTile(7, Colors.deepPurple),
             ],
           ),
         ),
