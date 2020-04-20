@@ -4,74 +4,77 @@ import 'package:audioplayers/audio_cache.dart';
 void main() => runApp(XylophoneApp());
 
 class XylophoneApp extends StatelessWidget {
-  void playSound() {
+  void playSound(int soundNumber) {
     final player = AudioCache();
     player.play(
-        'note1.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
+        'note$soundNumber.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: SafeArea(
           child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              FlatButton(
-                onPressed: () {
-                  final player = AudioCache();
-                  player.play('note1.wav');
-                },
-                color: Colors.red,
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    playSound(1);
+                  },
+                  color: Colors.red,
+                ),
               ),
-              FlatButton(
-                onPressed: () {
-                  final player = AudioCache();
-                  player.play(
-                      'note2.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
-                },
-                color: Colors.orange,
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    playSound(2);
+                  },
+                  color: Colors.orange,
+                ),
               ),
-              FlatButton(
-                onPressed: () {
-                  final player = AudioCache();
-                  player.play(
-                      'note3.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
-                },
-                color: Colors.yellow,
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    playSound(3);
+                  },
+                  color: Colors.yellow,
+                ),
               ),
-              FlatButton(
-                onPressed: () {
-                  final player = AudioCache();
-                  player.play(
-                      'note4.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
-                },
-                color: Colors.green,
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    playSound(4);
+                  },
+                  color: Colors.green,
+                ),
               ),
-              FlatButton(
-                onPressed: () {
-                  final player = AudioCache();
-                  player.play(
-                      'note5.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
-                },
-                color: Colors.blue,
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    playSound(5);
+                  },
+                  color: Colors.blue,
+                ),
               ),
-              FlatButton(
-                onPressed: () {
-                  final player = AudioCache();
-                  player.play(
-                      'note6.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
-                },
-                color: Colors.indigo,
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    playSound(6);
+                  },
+                  color: Colors.indigo,
+                ),
               ),
-              FlatButton(
-                onPressed: () {
-                  final player = AudioCache();
-                  player.play(
-                      'note7.wav'); //audioplayer automatically assumes that you have your files inside an asset folder
-                },
-                color: Colors.deepPurple,
+              Expanded(
+                child: FlatButton(
+                  onPressed: () {
+                    playSound(7);
+                  },
+                  color: Colors.deepPurple,
+                ),
               ),
             ],
           ),
