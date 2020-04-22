@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'question.dart';
+import 'quizbrain.dart';
 
 void main() => runApp(Quizzler());
+
+QuizBrain quizBrain = QuizBrain();
 
 class Quizzler extends StatefulWidget {
   @override
@@ -10,19 +12,12 @@ class Quizzler extends StatefulWidget {
 
 class _QuizzlerState extends State<Quizzler> {
   int qno = 0;
-  List<Question> questions = [
-    Question(q: 'You can lead a cow downstairs but not upstairs.', ans: false),
-    Question(
-        q: 'Approximately one quarter of human bones are in the feet.',
-        ans: true),
-    Question(q: 'A slug\'s blood is green.', ans: true)
-  ];
   List<Padding> scoreList = [];
 
   Widget QuestionCard(int qno) {
     return Container(
-      width: 300.0,
-      height: 300.0,
+      width: 350.0,
+      height: 350.0,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -40,9 +35,9 @@ class _QuizzlerState extends State<Quizzler> {
             ),
             dense: false,
             subtitle: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 20.0),
               child: Text(
-                questions[qno].questionText,
+                quizBrain.getQuestionText(qno),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -60,12 +55,16 @@ class _QuizzlerState extends State<Quizzler> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.deepPurpleAccent.shade100,
+        appBar: AppBar(
+          title: Center(child: Text('Happy Quizing')),
+          backgroundColor: Colors.deepPurple,
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: 100.0,
+              height: 50.0,
             ),
             Center(child: QuestionCard(qno)),
             SizedBox(
@@ -73,10 +72,10 @@ class _QuizzlerState extends State<Quizzler> {
               height: 50.0,
             ),
             ButtonTheme(
-              minWidth: 150.0,
+              minWidth: 250.0,
               height: 60.0,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               //padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
               child: RaisedButton(
@@ -89,7 +88,7 @@ class _QuizzlerState extends State<Quizzler> {
                   ),
                 ),
                 onPressed: () {
-                  if (questions[qno].questionAns == true) {
+                  if (quizBrain.getQuestionAns(qno) == true) {
                     scoreList.add(
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
@@ -122,10 +121,10 @@ class _QuizzlerState extends State<Quizzler> {
               height: 20.0,
             ),
             ButtonTheme(
-              minWidth: 150.0,
+              minWidth: 250.0,
               height: 60.0,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                borderRadius: BorderRadius.all(Radius.circular(10.0)),
               ),
               //padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
               child: RaisedButton(
@@ -138,7 +137,7 @@ class _QuizzlerState extends State<Quizzler> {
                   ),
                 ),
                 onPressed: () {
-                  if (questions[qno].questionAns == false) {
+                  if (quizBrain.getQuestionAns(qno) == false) {
                     scoreList.add(
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
