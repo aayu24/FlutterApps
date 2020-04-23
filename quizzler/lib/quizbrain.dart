@@ -41,6 +41,15 @@ class QuizBrain {
     return _qno;
   }
 
+  bool isFinished() {
+    print(_qno.toString() + ',' + (_qno == _questions.length).toString());
+    return (_qno >= _questions.length);
+  }
+
+  void resetQno() {
+    _qno = 1;
+  }
+
   String getQuestionText() {
     return _questions[_qno - 1].questionText;
   }

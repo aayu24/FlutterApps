@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quizbrain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 
@@ -13,32 +14,39 @@ class Quizzler extends StatefulWidget {
 class _QuizzlerState extends State<Quizzler> {
   List<Padding> scoreList = [];
 
-  void checkAnswer(userPickedAnswer) {
+  void checkAnswer(bool userPickedAnswer) {
     setState(() {
       //since we want the added icons to be shown
-      if (quizBrain.getQuestionAns() == userPickedAnswer) {
-        scoreList.add(
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Icon(
-              Icons.check,
-              color: Colors.lightGreenAccent.shade400,
-              size: 20.0,
-            ),
-          ),
-        );
+      if (quizBrain.isFinished()) {
+        Alert(context: context, title: "Thank You!!", desc: "The quiz is over.")
+            .show();
+        quizBrain.resetQno(); //resetting the question number
+        scoreList.clear(); //clear the score
       } else {
-        scoreList.add(
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Icon(
-              Icons.close,
-              color: Colors.red,
+        if (quizBrain.getQuestionAns() == userPickedAnswer) {
+          scoreList.add(
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Icon(
+                Icons.check,
+                color: Colors.lightGreenAccent.shade400,
+                size: 20.0,
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          scoreList.add(
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Icon(
+                Icons.close,
+                color: Colors.red,
+              ),
+            ),
+          );
+        }
+        quizBrain.getNextQuestion();
       }
-      quizBrain.getNextQuestion();
     });
   }
 
