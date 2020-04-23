@@ -11,10 +11,38 @@ class Quizzler extends StatefulWidget {
 }
 
 class _QuizzlerState extends State<Quizzler> {
-  int qno = 0;
   List<Padding> scoreList = [];
 
-  Widget QuestionCard(int qno) {
+  void checkAnswer(userPickedAnswer) {
+    setState(() {
+      //since we want the added icons to be shown
+      if (quizBrain.getQuestionAns() == userPickedAnswer) {
+        scoreList.add(
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Icon(
+              Icons.check,
+              color: Colors.lightGreenAccent.shade400,
+              size: 20.0,
+            ),
+          ),
+        );
+      } else {
+        scoreList.add(
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Icon(
+              Icons.close,
+              color: Colors.red,
+            ),
+          ),
+        );
+      }
+      quizBrain.getNextQuestion();
+    });
+  }
+
+  Widget QuestionCard() {
     return Container(
       width: 350.0,
       height: 350.0,
@@ -26,7 +54,7 @@ class _QuizzlerState extends State<Quizzler> {
         child: Center(
           child: ListTile(
             title: Text(
-              'Q.' + (qno + 1).toString(),
+              'Q.' + (quizBrain.getCurrentQuestion()).toString(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25.0,
@@ -37,7 +65,7 @@ class _QuizzlerState extends State<Quizzler> {
             subtitle: Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 20.0),
               child: Text(
-                quizBrain.getQuestionText(qno),
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20.0,
@@ -57,7 +85,7 @@ class _QuizzlerState extends State<Quizzler> {
       home: Scaffold(
         backgroundColor: Colors.deepPurpleAccent.shade100,
         appBar: AppBar(
-          title: Center(child: Text('Happy Quizing')),
+          title: Center(child: Text('Happy Quizzing')),
           backgroundColor: Colors.deepPurple,
         ),
         body: Column(
@@ -66,7 +94,7 @@ class _QuizzlerState extends State<Quizzler> {
             SizedBox(
               height: 50.0,
             ),
-            Center(child: QuestionCard(qno)),
+            Center(child: QuestionCard()),
             SizedBox(
               width: double.infinity,
               height: 50.0,
@@ -88,31 +116,7 @@ class _QuizzlerState extends State<Quizzler> {
                   ),
                 ),
                 onPressed: () {
-                  if (quizBrain.getQuestionAns(qno) == true) {
-                    scoreList.add(
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.lightGreenAccent.shade400,
-                          size: 20.0,
-                        ),
-                      ),
-                    );
-                  } else {
-                    scoreList.add(
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                      ),
-                    );
-                  }
-                  setState(() {
-                    qno++;
-                  });
+                  checkAnswer(true);
                 },
                 color: Colors.greenAccent.shade100,
               ),
@@ -137,30 +141,7 @@ class _QuizzlerState extends State<Quizzler> {
                   ),
                 ),
                 onPressed: () {
-                  if (quizBrain.getQuestionAns(qno) == false) {
-                    scoreList.add(
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Icon(
-                          Icons.check,
-                          color: Colors.lightGreenAccent.shade400,
-                        ),
-                      ),
-                    );
-                  } else {
-                    scoreList.add(
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Icon(
-                          Icons.close,
-                          color: Colors.red,
-                        ),
-                      ),
-                    );
-                  }
-                  setState(() {
-                    qno++;
-                  });
+                  checkAnswer(false);
                 },
                 color: Colors.redAccent,
               ),

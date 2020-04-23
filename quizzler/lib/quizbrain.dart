@@ -2,6 +2,7 @@ import 'question.dart';
 
 class QuizBrain {
   //naming the following list _questions will make it private
+  int _qno = 1;
   List<Question> _questions = [
     Question('Some cats are actually allergic to humans', true),
     Question('You can lead a cow down stairs but not up stairs.', false),
@@ -30,11 +31,21 @@ class QuizBrain {
         true),
   ];
 
-  String getQuestionText(int qno) {
-    return _questions[qno].questionText;
+  void getNextQuestion() {
+    if (_qno < _questions.length) {
+      _qno++;
+    }
   }
 
-  bool getQuestionAns(int qno) {
-    return _questions[qno].questionAns;
+  int getCurrentQuestion() {
+    return _qno;
+  }
+
+  String getQuestionText() {
+    return _questions[_qno - 1].questionText;
+  }
+
+  bool getQuestionAns() {
+    return _questions[_qno - 1].questionAns;
   }
 }
