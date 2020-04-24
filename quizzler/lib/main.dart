@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'quizbrain.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'dimensions.dart';
 
 void main() => runApp(Quizzler());
 
@@ -13,13 +14,33 @@ class Quizzler extends StatefulWidget {
 
 class _QuizzlerState extends State<Quizzler> {
   List<Padding> scoreList = [];
+  ScreenDimensions screenDimensions;
+  void getScreenDimensions() {
+    screenDimensions = new ScreenDimensions(context);
+    print('width:' + screenDimensions.getWidth().toString() + '\n');
+    print('height:' + screenDimensions.getHeight().toString() + '\n');
+  }
 
-  void checkAnswer(bool userPickedAnswer) {
+  void checkAnswer(bool userPickedAnswer, newcontext) {
     setState(() {
       //since we want the added icons to be shown
       if (quizBrain.isFinished()) {
-        Alert(context: context, title: "Thank You!!", desc: "The quiz is over.")
-            .show();
+        Alert(
+            context: newcontext,
+            title: "Thank You!!",
+            desc: "The quiz is over.",
+            buttons: [
+              DialogButton(
+                  color: Colors.lightGreenAccent,
+                  radius: BorderRadius.circular(10.0),
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  onPressed: () => Navigator.pop(newcontext)),
+            ]).show();
         quizBrain.resetQno(); //resetting the question number
         scoreList.clear(); //clear the score
       } else {
@@ -52,8 +73,6 @@ class _QuizzlerState extends State<Quizzler> {
 
   Widget QuestionCard() {
     return Container(
-      width: 350.0,
-      height: 350.0,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -96,73 +115,90 @@ class _QuizzlerState extends State<Quizzler> {
           title: Center(child: Text('Happy Quizzing')),
           backgroundColor: Colors.deepPurple,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 50.0,
-            ),
-            Center(child: QuestionCard()),
-            SizedBox(
-              width: double.infinity,
-              height: 50.0,
-            ),
-            ButtonTheme(
-              minWidth: 250.0,
-              height: 60.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        body: Builder(
+          //use this instead of directly column , since we need to pass down the context to Alert for it to show
+          //just directly using context inside MaterialApp would return null, since the context is above the MaterialApp
+          builder: (context) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 50.0,
               ),
-              //padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-              child: RaisedButton(
-                child: Text(
-                  'True',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.white,
+              Expanded(
+                  flex: 6,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Center(child: QuestionCard()),
+                  )),
+              SizedBox(
+                width: double.infinity,
+                height: 50.0,
+              ),
+              ButtonTheme(
+                minWidth: 250.0,
+                height: 60.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                //padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                child: Expanded(
+                  flex: 1,
+                  child: RaisedButton(
+                    child: Text(
+                      'True',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      checkAnswer(true, context);
+                    },
+                    color: Colors.greenAccent.shade100,
                   ),
                 ),
-                onPressed: () {
-                  checkAnswer(true);
-                },
-                color: Colors.greenAccent.shade100,
               ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            ButtonTheme(
-              minWidth: 250.0,
-              height: 60.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              SizedBox(
+                height: 20.0,
               ),
-              //padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-              child: RaisedButton(
-                child: Text(
-                  'False',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.white,
+              ButtonTheme(
+                minWidth: 250.0,
+                height: 60.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                //padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                child: Expanded(
+                  flex: 1,
+                  child: RaisedButton(
+                    child: Text(
+                      'False',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 25.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      checkAnswer(false, context);
+                    },
+                    color: Colors.redAccent,
                   ),
                 ),
-                onPressed: () {
-                  checkAnswer(false);
-                },
-                color: Colors.redAccent,
               ),
-            ),
-            SizedBox(
-              height: 30.0,
-              width: double.infinity,
-            ),
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: scoreList,
-            ),
-          ],
+              Expanded(
+                child: SizedBox(
+                  height: 30.0,
+                  width: double.infinity,
+                  child: Row(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: scoreList,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
