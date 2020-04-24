@@ -103,6 +103,7 @@ class _QuizzlerState extends State<Quizzler> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.deepPurpleAccent.shade100,
         appBar: AppBar(
