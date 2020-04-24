@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'quizbrain.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'dimensions.dart';
 
 void main() => runApp(Quizzler());
 
@@ -14,14 +13,9 @@ class Quizzler extends StatefulWidget {
 
 class _QuizzlerState extends State<Quizzler> {
   List<Padding> scoreList = [];
-  ScreenDimensions screenDimensions;
-  void getScreenDimensions() {
-    screenDimensions = new ScreenDimensions(context);
-    print('width:' + screenDimensions.getWidth().toString() + '\n');
-    print('height:' + screenDimensions.getHeight().toString() + '\n');
-  }
-
   void checkAnswer(bool userPickedAnswer, newcontext) {
+    print('width:' + MediaQuery.of(newcontext).size.width.toString());
+    print('orientation:' + MediaQuery.of(newcontext).orientation.toString());
     setState(() {
       //since we want the added icons to be shown
       if (quizBrain.isFinished()) {
