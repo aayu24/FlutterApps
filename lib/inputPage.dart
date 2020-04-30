@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'icon_content.dart';
+import 'reusable_card.dart';
 
 //these can be a const as we can work out this value at time of compilation
 const bottomContainerHeight = 80.0;
@@ -24,10 +27,22 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: ReusableCard(colour: activeCardColor),
+                  child: ReusableCard(
+                    colour: activeCardColor,
+                    cardChild: GenderIcon(
+                      genderIcon: FontAwesomeIcons.mars,
+                      gender: 'MALE',
+                    ),
+                  ),
                 ),
                 Expanded(
-                  child: ReusableCard(colour: activeCardColor),
+                  child: ReusableCard(
+                    colour: activeCardColor,
+                    cardChild: GenderIcon(
+                      genderIcon: FontAwesomeIcons.venus,
+                      gender: 'FEMALE',
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -62,22 +77,3 @@ class _InputPageState extends State<InputPage> {
 
 //Custom widget or Reusable widget
 //Since this is stateless , it is immutable/can't be changed
-class ReusableCard extends StatelessWidget {
-  //key class not useful for us, as our widget is stateless/static on screen.\
-  //final makes this property immutable , i.e can be set only once
-  final Color colour;
-  //the above can't be const as we only build this after compilation , hence can't resolve the Color at compile time
-  ReusableCard({@required this.colour}); //as we require colour
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15.0),
-      //to implement rounder border
-      decoration: BoxDecoration(
-        color: colour,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-    );
-  }
-}
