@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class GenderIcon extends StatelessWidget {
   final IconData genderIcon; //turns out this is an IconData type

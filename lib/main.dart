@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'inputPage.dart';
+import 'screens/inputPage.dart';
 
 //this file mainly contains a lot of themes/fonts/colours for the app
 void main() => runApp(BMICalculator());
