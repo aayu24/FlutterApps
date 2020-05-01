@@ -3,8 +3,8 @@ import 'constants.dart';
 
 class GenderIcon extends StatelessWidget {
   final IconData genderIcon; //turns out this is an IconData type
-  final String gender;
-  GenderIcon({@required this.genderIcon, @required this.gender});
+  final String label;
+  GenderIcon({@required this.genderIcon, @required this.label});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,8 +18,8 @@ class GenderIcon extends StatelessWidget {
           height: 15.0,
         ),
         Text(
-          gender,
-          style: kGenderTextStyle,
+          label,
+          style: kLabelTextStyle,
         ),
       ],
     );

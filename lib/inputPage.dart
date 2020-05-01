@@ -15,7 +15,7 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender selectedGender;
-
+  int height = 180;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +39,7 @@ class _InputPageState extends State<InputPage> {
                         : kInactiveCardColor,
                     cardChild: GenderIcon(
                       genderIcon: FontAwesomeIcons.mars,
-                      gender: 'MALE',
+                      label: 'MALE',
                     ),
                   ),
                 ),
@@ -55,7 +55,7 @@ class _InputPageState extends State<InputPage> {
                         : kInactiveCardColor,
                     cardChild: GenderIcon(
                       genderIcon: FontAwesomeIcons.venus,
-                      gender: 'FEMALE',
+                      label: 'FEMALE',
                     ),
                   ),
                 ),
@@ -63,11 +63,57 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
+            flex: 1,
             child: ReusableCard(
               colour: kActiveCardColor,
               cardChild: Column(
+                //crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('HEIGHT'),
+                  Container(
+                    margin: EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      'HEIGHT',
+                      style: kLabelTextStyle,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: kNumberTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: kLabelTextStyle,
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbShape:
+                          RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                      overlayShape: //increase the holo radius when slider selected
+                          RoundSliderOverlayShape(overlayRadius: 30.0),
+                      overlayColor: Color(0x29eb1555),
+                      thumbColor: Color(0xffeb1555),
+                      activeTrackColor: Colors.white,
+                      inactiveTrackColor: Color(0xff8d8e98),
+                    ),
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: 120.0,
+                      max: 220.0,
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.toInt();
+                        });
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
